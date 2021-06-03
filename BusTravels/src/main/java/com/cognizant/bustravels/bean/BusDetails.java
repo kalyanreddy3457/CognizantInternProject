@@ -1,13 +1,13 @@
 package com.cognizant.bustravels.bean;
-import java.time.*;
+import java.sql.Time;
 public class BusDetails {
 
 	private int bus_id;
 	private String bus_name;
 	private String bus_source;
 	private String bus_destination;
-	private LocalTime start_time;
-	private LocalTime end_time;
+	private Time start_time;
+	private Time end_time;
 	private String journey_time;
 	private int price;
 	private String amenities;
@@ -38,16 +38,16 @@ public class BusDetails {
 	public void setBus_destination(String bus_destination) {
 		this.bus_destination = bus_destination;
 	}
-	public LocalTime getStart_time() {
+	public Time getStart_time() {
 		return start_time;
 	}
-	public void setStart_time(LocalTime start_time) {
+	public void setStart_time(Time start_time) {
 		this.start_time = start_time;
 	}
-	public LocalTime getEnd_time() {
+	public Time getEnd_time() {
 		return end_time;
 	}
-	public void setEnd_time(LocalTime end_time) {
+	public void setEnd_time(Time end_time) {
 		this.end_time = end_time;
 	}
 	public String getJourney_time() {

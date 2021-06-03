@@ -1,5 +1,7 @@
 package com.cognizant.bustravels.bean;
-import java.time.*;
+
+import java.util.Date;
+
 public class Payments {
 
 	private int payment_id;
@@ -8,7 +10,7 @@ public class Payments {
 	private String coupon_name;
 	private int total_price;
 	private int no_of_passengers;
-	private LocalDate payment_date;
+	private Date payment_date;
 	private String payment_status;
 	public int getPayment_id() {
 		return payment_id;
@@ -46,10 +48,10 @@ public class Payments {
 	public void setNo_of_passengers(int no_of_passengers) {
 		this.no_of_passengers = no_of_passengers;
 	}
-	public LocalDate getPayment_date() {
+	public Date getPayment_date() {
 		return payment_date;
 	}
-	public void setPayment_date(LocalDate payment_date) {
+	public void setPayment_date(Date payment_date) {
 		this.payment_date = payment_date;
 	}
 	public String getPayment_status() {
