@@ -17,7 +17,7 @@ public class BusDAO {
 	JdbcTemplate jdbcTemplate;
 	public String addBus(BusDetails bus)throws BusException
 	{
-		String sql="insert into bus_details ((bus_name,bus_source,bus_destination,start_time,end_time,journey_time,price,amenities,pick_point,drop_point,no_of_seats_available) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql="insert into bus_details (bus_name,bus_source,bus_destination,start_time,end_time,journey_time,price,amenities,pick_point,drop_point,no_of_seats_available) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 	    if(jdbcTemplate.update(sql,bus.getBus_name(),bus.getBus_source(),bus.getBus_destination(),bus.getStart_time(),bus.getEnd_time(),bus.getJourney_time(),bus.getPrice(),bus.getAmenities(),bus.getPick_point(),bus.getDrop_point(),bus.getNo_of_seats_available())>0)
 	    	return "added Succesfully";
 	    else
@@ -25,7 +25,7 @@ public class BusDAO {
 	}
 	public String updateBus(BusDetails bus,int bus_id)throws BusException
 	{
-		String sql="update bus_details set bus_name=?,bus_source?,bus_destination=?,start_time=?,end_time=?,journey_time=?,price=?,amenities=?,pick_point=?,drop_point=?,no_of_seats_available=? where bus_id=?";
+		String sql="update bus_details set bus_name=?,bus_source=?,bus_destination=?,start_time=?,end_time=?,journey_time=?,price=?,amenities=?,pick_point=?,drop_point=?,no_of_seats_available=? where bus_id=?";
 		if(jdbcTemplate.update(sql,bus.getBus_name(),bus.getBus_source(),bus.getBus_destination(),bus.getStart_time(),bus.getEnd_time(),bus.getJourney_time(),bus.getPrice(),bus.getAmenities(),bus.getPick_point(),bus.getDrop_point(),bus.getNo_of_seats_available(),bus.getBus_id())>0)
 		{
 			return "updated successfully";
