@@ -10,7 +10,7 @@ import com.cognizant.bustravels.dao.BusDAO;
 import com.cognizant.bustravels.exception.BusException;
 
 @Service
-public class BusService {
+public class BusService implements IBusService{
 
 	@Autowired
 	BusDAO busdao;
@@ -34,5 +34,9 @@ public class BusService {
 	public List<BusDetails> searchBus(String source,String destination,int no_of_seats)throws BusException
 	{
 		return busdao.searchBus(source,destination,no_of_seats);
+	}
+	public List<BusDetails> viewMyTrips(String email_id)throws BusException
+	{
+		return busdao.viewMyTrips(email_id);
 	}
 }

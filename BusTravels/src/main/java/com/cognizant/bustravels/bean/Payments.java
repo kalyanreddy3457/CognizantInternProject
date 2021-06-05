@@ -2,6 +2,8 @@ package com.cognizant.bustravels.bean;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Payments {
 
 	private int payment_id;
@@ -10,6 +12,7 @@ public class Payments {
 	private String coupon_name;
 	private int total_price;
 	private int no_of_passengers;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date payment_date;
 	private String payment_status;
 	public int getPayment_id() {

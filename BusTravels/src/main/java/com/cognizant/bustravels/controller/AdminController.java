@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.bustravels.bean.BusDetails;
+import com.cognizant.bustravels.bean.Issues;
 import com.cognizant.bustravels.exception.BusException;
 import com.cognizant.bustravels.exception.UserException;
 import com.cognizant.bustravels.service.BusService;
+import com.cognizant.bustravels.service.IssuesService;
 
 
 @CrossOrigin
@@ -27,6 +29,8 @@ public class AdminController {
 
 	@Autowired
 	BusService busService;
+	@Autowired
+    IssuesService issuesService;
 	
 	@PostMapping("/addBus")
 	public ResponseEntity<String> addBus(@RequestBody BusDetails bus)throws BusException
@@ -47,6 +51,11 @@ public class AdminController {
 	public ResponseEntity<List<BusDetails>> viewBus(@PathVariable String source,@PathVariable String destination)throws BusException
 	{
 		return new ResponseEntity<List<BusDetails>>(busService.viewBus(source,destination),HttpStatus.OK);
+	}
+    @GetMapping("/displayIssues")
+	public ResponseEntity<List<Issues>> displayCompany()
+	{
+		return new ResponseEntity<List<Issues>>(issuesService.displayIssues(),HttpStatus.OK);
 	}
     @ExceptionHandler(UserException.class)
 	public ResponseEntity<Object> Exception(Exception ex)
