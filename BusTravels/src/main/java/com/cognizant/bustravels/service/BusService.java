@@ -39,4 +39,7 @@ public class BusService implements IBusService{
 	{
 		return busdao.viewMyTrips(email_id);
 	}
+	public List<BusDetails> viewBuses(int bus_id) throws BusException {
+		return busdao.viewBuses(bus_id);
+	}
 }

@@ -83,6 +83,49 @@ public class CustomerController {
     		return new ResponseEntity<String>("Issue is not added",HttpStatus.NOT_FOUND);
     	}
     }
+    @PutMapping("/updateProfile/{email_id}")
+    public ResponseEntity<String> updateProfile( @RequestBody User user,@PathVariable String email_id)throws UserException{
+    	
+    	if(userService.updateProfile( user,email_id))
+    	{
+    		
+    		return new ResponseEntity<String>("Profile Updated",HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity<String>("Profile is not Updated",HttpStatus.NOT_FOUND);
+    	}
+    	
+    }
+    
+    @GetMapping("/viewProfile/{email_id}")
+    public ResponseEntity<List<User>> viewProfile(@PathVariable String email_id)throws UserException
+    {
+    	System.out.println(email_id);
+    	return new ResponseEntity<List<User>>(userService.viewProfile(email_id),HttpStatus.OK);
+    }
+ 
+    
+    @PutMapping("/changePassword/{email_id}")
+    public ResponseEntity<String> changePassword( @RequestBody User user,@PathVariable String email_id)throws UserException{
+    	
+    	if(userService.changePassword( user,email_id))
+    	{
+    		
+    		return new ResponseEntity<String>("Password is changed",HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity<String>("Password is not changed",HttpStatus.NOT_FOUND);
+    	}
+    	
+    }
+    @ExceptionHandler(UserException.class)
+	public ResponseEntity<Object> Exception5(Exception ex)
+	{
+		System.out.println(ex);
+		return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
     @ExceptionHandler(BusException.class)
 	public ResponseEntity<Object> Exception1(Exception ex)
 	{

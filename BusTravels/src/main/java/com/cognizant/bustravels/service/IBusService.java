@@ -13,4 +13,5 @@ public interface IBusService {
 	public List<BusDetails> viewBus(String source,String destination)throws BusException;
 	public List<BusDetails> searchBus(String source,String destination,int no_of_seats)throws BusException;
 	public List<BusDetails> viewMyTrips(String email_id)throws BusException;
+	public List<BusDetails> viewBuses(int bus__id)throws BusException;
 }

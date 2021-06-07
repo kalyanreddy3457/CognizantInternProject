@@ -47,5 +47,36 @@ public class UserDAO {
 		}
 		
 	}
+	public boolean updateProfile(User user, String email_id)throws UserException 
+	{
+		try
+		{
+		String sql="update users set username=?, phone=?, gender=?, password=? where email_id = ?";
+		return jdbcTemplate.update(sql,user.getUsername(),user.getPhone(),user.getGender(),user.getPassword(),email_id)>0;
+		}
+		catch(DataAccessException e)
+		{
+			throw new UserException("Details are same as before");
+		}
+	}
+
+	public boolean changePassword(User user, String email_id) throws UserException
+	{
+		try
+		{
+		String sql="update users set password=? where email_id = ?";
+		return jdbcTemplate.update(sql,user.getPassword(),email_id)>0;
+		}
+		catch(DuplicateKeyException e)
+		{
+			throw new UserException("Password is same as before");
+		}
+	}
+
+	public List<User> viewProfile(String email_id) throws UserException {
+		String sql="select * from users where email_id=?";
+			return jdbcTemplate.query(sql,new UserRowMapper(),email_id);		
+		
+	}
 
 }

@@ -101,4 +101,22 @@ public class BusDAO {
 			throw new BusException("check the email_id");
 		}
 	}
+	public List<BusDetails> viewBuses(int bus_id)throws BusException
+	{
+		String sql="select * from bus_details where bus_id=?";
+		try
+		{
+			List<BusDetails> list=jdbcTemplate.query(sql,new BusDetailsRowMapper(),bus_id);
+			if(list.isEmpty())
+			{
+				throw new BusException("No Bus is available with bus_id");
+			}
+			else
+				return list;
+		}
+		catch(DataAccessException e)
+		{
+			throw new BusException("bus_id is invalid");
+		}
+	}
 }

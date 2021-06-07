@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.cognizant.bustravels.bean.Coupon;
 import com.cognizant.bustravels.bean.CouponUsed;
 import com.cognizant.bustravels.exception.CouponException;
 
@@ -36,6 +38,42 @@ public class CouponDAO {
 		catch(DataAccessException e)
 		{
 			throw new CouponException("coupon name is invalid");
+		}
+	}
+	public boolean addUser(Coupon coupon) throws CouponException {
+		try
+		{
+		String sql="insert into coupon values(?,?)";
+		return jdbcTemplate.update(sql,coupon.getCoupon_name(),coupon.getPrice())>0;
+		}
+		catch(DuplicateKeyException e)
+		{
+			throw new CouponException("Coupon is already added");
+		}
+	}
+
+	public List<Coupon> viewCoupon()  throws CouponException {
+		String sql="select * from coupon";
+		return jdbcTemplate.query(sql,new CouponRowMapper());
+	}
+
+	public boolean deleteCoupon(String coupon_name) throws CouponException {
+		String sql="delete from coupon where coupon_name=?";
+		if(jdbcTemplate.update(sql,coupon_name)>0)
+		return true;
+		else
+			throw new CouponException("Company is already deleted"); 
+	}
+
+	public boolean updateCoupon(Coupon coupon, String coupon_name) throws CouponException {
+		try
+		{
+		String sql="update coupon set price=? where coupon_name = ? ";
+		return jdbcTemplate.update(sql,coupon.getPrice(),coupon_name)>0;
+		}
+		catch(DataAccessException e)
+		{
+			throw new CouponException("Coupon price is same as before");
 		}
 	}
 
