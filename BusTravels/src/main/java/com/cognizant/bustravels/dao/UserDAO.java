@@ -51,8 +51,8 @@ public class UserDAO {
 	{
 		try
 		{
-		String sql="update users set username=?, phone=?, gender=?, password=? where email_id = ?";
-		return jdbcTemplate.update(sql,user.getUsername(),user.getPhone(),user.getGender(),user.getPassword(),email_id)>0;
+		String sql="update users set username=?, phone=?, gender=? where email_id = ?";
+		return jdbcTemplate.update(sql,user.getUsername(),user.getPhone(),user.getGender(),email_id)>0;
 		}
 		catch(DataAccessException e)
 		{

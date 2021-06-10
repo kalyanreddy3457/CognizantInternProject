@@ -27,8 +27,14 @@ public class CouponDAO {
 		if(list.isEmpty())
 		{
 			String sql1="insert into coupon_used values(?,?)";
-			jdbcTemplate.update(sql1,email_id,couponUsed.getCoupon_name());
+			if(jdbcTemplate.update(sql1,email_id,couponUsed.getCoupon_name())>0)
+			{
 			return "Coupon appiled";
+			}
+			else
+			{
+				throw new CouponException("Coupon not appiled");
+			}
 		}
 		else
 		{
@@ -62,7 +68,7 @@ public class CouponDAO {
 		if(jdbcTemplate.update(sql,coupon_name)>0)
 		return true;
 		else
-			throw new CouponException("Company is already deleted"); 
+			throw new CouponException("Coupon is already deleted"); 
 	}
 
 	public boolean updateCoupon(Coupon coupon, String coupon_name) throws CouponException {

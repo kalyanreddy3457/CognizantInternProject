@@ -19,6 +19,7 @@ import com.cognizant.bustravels.bean.CouponUsed;
 import com.cognizant.bustravels.bean.Issues;
 import com.cognizant.bustravels.bean.Payments;
 import com.cognizant.bustravels.bean.User;
+import com.cognizant.bustravels.bean.ViewMyTrips;
 import com.cognizant.bustravels.exception.BusException;
 import com.cognizant.bustravels.exception.CouponException;
 import com.cognizant.bustravels.exception.IssuesException;
@@ -46,14 +47,14 @@ public class CustomerController {
     IssuesService issuesService;
 	
 	@GetMapping("/searchBus/{source}/{destination}/{no_of_seats}")
-	public ResponseEntity<List<BusDetails>> serachBus(@PathVariable String source,@PathVariable String destination,@PathVariable int no_of_seats)throws BusException
+	public ResponseEntity<List<BusDetails>> searchBus(@PathVariable String source,@PathVariable String destination,@PathVariable int no_of_seats)throws BusException
 	{
 		return new ResponseEntity<List<BusDetails>>(busService.searchBus(source,destination,no_of_seats),HttpStatus.OK);
 	}
 	@GetMapping("/viewMyTrips/{email_id}")
-	public ResponseEntity<List<BusDetails>> viewMyTrips(@PathVariable String email_id)throws BusException
+	public ResponseEntity<List<ViewMyTrips>> viewMyTrips(@PathVariable String email_id)throws BusException
 	{
-		return new ResponseEntity<List<BusDetails>>(busService.viewMyTrips(email_id),HttpStatus.OK);
+		return new ResponseEntity<List<ViewMyTrips>>(busService.viewMyTrips(email_id),HttpStatus.OK);
 	}
 	@PostMapping("/makePayment")
 	public ResponseEntity<String> makePayment(@RequestBody Payments payments)throws PaymentsException
@@ -120,6 +121,31 @@ public class CustomerController {
     	}
     	
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> verifyLogin(@RequestBody User user)throws UserException
+    {
+    	if(userService.verifyLogin(user))
+    	{
+    	return new ResponseEntity<String>("User is Valid",HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity<String>("InValid User",HttpStatus.NOT_FOUND);
+    	}
+    }
+    @PostMapping("/register")
+    public ResponseEntity<String> addUser(@RequestBody User user)throws UserException{
+    	
+    	if(userService.addUser(user))
+    	{
+    		return new ResponseEntity<String>("User is added",HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity<String>("User is not added",HttpStatus.NOT_FOUND);
+    	}
+    	
+    }
     @ExceptionHandler(UserException.class)
 	public ResponseEntity<Object> Exception5(Exception ex)
 	{
@@ -128,12 +154,6 @@ public class CustomerController {
 	}
     @ExceptionHandler(BusException.class)
 	public ResponseEntity<Object> Exception1(Exception ex)
-	{
-		System.out.println(ex);
-		return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.NOT_FOUND);
-	}
-    @ExceptionHandler(UserException.class)
-	public ResponseEntity<Object> Exception(Exception ex)
 	{
 		System.out.println(ex);
 		return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.NOT_FOUND);
@@ -156,31 +176,5 @@ public class CustomerController {
 		System.out.println(ex);
 		return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.NOT_FOUND);
 	}
-    @PostMapping("/login")
-    public ResponseEntity<String> verifyLogin(@RequestBody User user)throws UserException
-    {
-    	if(userService.verifyLogin(user))
-    	{
-    	return new ResponseEntity<String>("User is Valid",HttpStatus.OK);
-    	}
-    	else
-    	{
-    		return new ResponseEntity<String>("InValid User",HttpStatus.NOT_FOUND);
-    	}
-    }
-    
-    @PostMapping("/register")
-    public ResponseEntity<String> addUser(@RequestBody User user)throws UserException{
-    	
-    	if(userService.addUser(user))
-    	{
-    		return new ResponseEntity<String>("User is added",HttpStatus.OK);
-    	}
-    	else
-    	{
-    		return new ResponseEntity<String>("User is not added",HttpStatus.NOT_FOUND);
-    	}
-    	
-    }
 
 }

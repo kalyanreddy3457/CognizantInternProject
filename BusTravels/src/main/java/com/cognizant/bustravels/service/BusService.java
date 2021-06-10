@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.bustravels.bean.BusDetails;
+import com.cognizant.bustravels.bean.ViewMyTrips;
 import com.cognizant.bustravels.dao.BusDAO;
 import com.cognizant.bustravels.exception.BusException;
 
@@ -35,11 +36,15 @@ public class BusService implements IBusService{
 	{
 		return busdao.searchBus(source,destination,no_of_seats);
 	}
-	public List<BusDetails> viewMyTrips(String email_id)throws BusException
+	public List<ViewMyTrips> viewMyTrips(String email_id)throws BusException
 	{
 		return busdao.viewMyTrips(email_id);
 	}
 	public List<BusDetails> viewBuses(int bus_id) throws BusException {
 		return busdao.viewBuses(bus_id);
+	}
+	public List<BusDetails> viewAllBus()throws BusException
+	{
+		return busdao.viewAllBus();
 	}
 }

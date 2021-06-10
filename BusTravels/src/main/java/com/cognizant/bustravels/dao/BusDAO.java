@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cognizant.bustravels.bean.BusDetails;
+import com.cognizant.bustravels.bean.ViewMyTrips;
 import com.cognizant.bustravels.exception.BusException;
 
 @Repository
@@ -83,12 +84,12 @@ public class BusDAO {
 			throw new BusException("Input fields are wrong");
 		}
 	}
-	public List<BusDetails> viewMyTrips(String email_id)throws BusException
+	public List<ViewMyTrips> viewMyTrips(String email_id)throws BusException
 	{
-		String sql="select * from bus_details where bus_id in (select bus_id from payments where email_id=?)";
+		String sql="select p.payment_date,b.bus_name,b.bus_source,b.bus_destination,b.start_time,b.end_time,p.total_price,p.no_of_passengers,p.payment_status,p.payment_id from bus_details b,payments p where p.email_id=? and p.bus_id=b.bus_id";
 		try
 		{
-		List<BusDetails> list=jdbcTemplate.query(sql,new BusDetailsRowMapper(),email_id);
+		List<ViewMyTrips> list=jdbcTemplate.query(sql,new ViewRowMapper(),email_id);
 		if(list.isEmpty())
 		{
 			throw new BusException("no trips are made....");
@@ -98,7 +99,7 @@ public class BusDAO {
 		}
 		catch(DataAccessException e)
 		{
-			throw new BusException("check the email_id");
+			throw new BusException("check the email_id"+e);
 		}
 	}
 	public List<BusDetails> viewBuses(int bus_id)throws BusException
@@ -118,5 +119,17 @@ public class BusDAO {
 		{
 			throw new BusException("bus_id is invalid");
 		}
+	}
+	public List<BusDetails> viewAllBus()throws BusException
+	{
+		String sql="select * from bus_details";
+		List<BusDetails> list= jdbcTemplate.query(sql,new BusDetailsRowMapper());
+		if(list.isEmpty())
+		{
+			throw new BusException("No Buses are there");
+		}
+		else
+			return list;
+		
 	}
 }

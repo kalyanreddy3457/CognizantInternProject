@@ -57,13 +57,18 @@ public class AdminController {
 	{
 		return new ResponseEntity<List<BusDetails>>(busService.viewBus(source,destination),HttpStatus.OK);
 	}
+	@GetMapping("/viewAllBus")
+	public ResponseEntity<List<BusDetails>> viewAllBus()throws BusException
+	{
+		return new ResponseEntity<List<BusDetails>>(busService.viewAllBus(),HttpStatus.OK);
+	}
 	@GetMapping("/viewBuses/{bus_id}")
 	public ResponseEntity<List<BusDetails>> viewBuses(@PathVariable int bus_id)throws BusException
 	{
 		return new ResponseEntity<List<BusDetails>>(busService.viewBuses(bus_id),HttpStatus.OK);
 	}
     @GetMapping("/displayIssues")
-	public ResponseEntity<List<Issues>> displayCompany()
+	public ResponseEntity<List<Issues>> displayIssues()
 	{
 		return new ResponseEntity<List<Issues>>(issuesService.displayIssues(),HttpStatus.OK);
 	}
@@ -82,7 +87,7 @@ public class AdminController {
 	 }
 	 
 	 @GetMapping("/viewCoupon")
-	    public ResponseEntity<List<Coupon>> viewCoupon(@RequestBody Coupon coupon)throws CouponException{
+	    public ResponseEntity<List<Coupon>> viewCoupon()throws CouponException{
 	    	
 	   		return new ResponseEntity<List<Coupon>>(couponService.viewCoupon(),HttpStatus.OK);
 	    	
